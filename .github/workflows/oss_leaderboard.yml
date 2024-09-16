@@ -2,7 +2,7 @@ name: Generate Community Leaderboard
 
 on:
   schedule:
-    - cron: '07 9 * * *'
+    - cron: '35 9 * * *'
 jobs:
 
   build:

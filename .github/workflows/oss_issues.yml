@@ -2,7 +2,7 @@ name: Get all community open issues
 
 on:
   schedule:
-    - cron: '05 9 * * *'
+    - cron: '41 9 * * *'
 jobs:
 
   build:
