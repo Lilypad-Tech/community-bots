@@ -1,7 +1,7 @@
-version: '3.3'
+version: '3.9'
 
 services:
-  assistant:
+  lilypad_assistant:
     build: .
     container_name: lilypad_assistant
     image: lilypad_assistant
