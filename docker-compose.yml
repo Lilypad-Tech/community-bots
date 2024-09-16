@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  lilypad_assistant:
+    build: .
+    container_name: lilypad_assistant
+    image: lilypad_assistant
+    restart: always
+    volumes:
+      - ./:/home/docker_volume
+    working_dir: /home/docker_volume
+    environment:
+      - DISCORD_WEBHOOK
+    entrypoint: tail -f /dev/null
