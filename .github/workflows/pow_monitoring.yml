@@ -1,0 +1,21 @@
+name: POW Monitoring
+
+on:
+  schedule:
+    - cron: '5 * * * *'  # Runs every 5 minutes past each hour
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image and monitor POW address 
+      env:
+        POW_DISCORD_WEBHOOK: ${{ secrets.POW_DISCORD_WEBHOOK }}
+        ARBISCAN_API_KEY: ${{ secrets.ARBISCAN_API_KEY }}
+      run: |
+        docker compose run \
+          --env POW_DISCORD_WEBHOOK=$POW_DISCORD_WEBHOOK \
+          --env ARBISCAN_API_KEY=$ARBISCAN_API_KEY \
+          --entrypoint "sh -c 'python3 pow_monitoring.py'" \
+          lilypad_assistant

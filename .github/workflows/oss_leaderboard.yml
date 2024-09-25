@@ -3,15 +3,15 @@ name: Generate Community Leaderboard
 on:
   schedule:
     - cron: '0 16 * * 3,0'
+
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Build the Docker image and generate community leaderboard
+
       env:
-        DISCORD_WEBHOOK: ${{ secrets.OSS_DISCORD_WEBHOOK }}
-      run: docker compose run --env DISCORD_WEBHOOK=$DISCORD_WEBHOOK --entrypoint "sh -c 'python3 oss_leaderboard.py'" lilypad_assistant
+        OSS_DISCORD_WEBHOOK: ${{ secrets.OSS_DISCORD_WEBHOOK }}
+      run: docker compose run --env OSS_DISCORD_WEBHOOK=$OSS_DISCORD_WEBHOOK --entrypoint "sh -c 'python3 oss_leaderboard.py'" lilypad_assistant
