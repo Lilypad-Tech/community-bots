@@ -1,7 +1,7 @@
 from collections import defaultdict
 from utils.git import fetch_all_issues
 from utils.discord import send_discord_message
-from vars import DISCORD_WEBHOOK, GIT_API_URL
+from vars import OSS_DISCORD_WEBHOOK, GIT_API_URL
 
 # GitHub 
 params_closed = {'state': 'closed', 'per_page': 100, 'page': 1}
@@ -71,6 +71,6 @@ def generate_leaderboard():
     sorted_assignees = sorted(solved_issues_by_assignee.items(), key=lambda x: x[1], reverse=True)
 
     leaderboard_message = format_leaderboard_with_progress(sorted_assignees)
-    send_discord_message(DISCORD_WEBHOOK, leaderboard_message)
+    send_discord_message(OSS_DISCORD_WEBHOOK, leaderboard_message)
     
 generate_leaderboard()

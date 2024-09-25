@@ -1,7 +1,7 @@
 import random
 from utils.git import fetch_all_issues
 from utils.discord import send_discord_message
-from vars import DISCORD_WEBHOOK, GIT_API_URL
+from vars import OSS_DISCORD_WEBHOOK, GIT_API_URL
 
 # GitHub 
 params_open = {'state': 'open', 'per_page': 100, 'page': 1}
@@ -63,7 +63,7 @@ def process_open_issues():
                            "\n\n" +
                            format_issues(community_assigned_issues, "**Assigned**"))
 
-    send_discord_message(DISCORD_WEBHOOK, open_issues_message)
+    send_discord_message(OSS_DISCORD_WEBHOOK, open_issues_message)
     
 # Process open issues
 process_open_issues()
