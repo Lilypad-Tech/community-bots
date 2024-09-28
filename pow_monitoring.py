@@ -80,7 +80,7 @@ def monitor_transactions():
     total_seconds_since_last_tx = time_diff.total_seconds()  # Get the difference in total seconds
 
     # Info message to include with the alerts, contains the contract URL and Discord roles to tag
-    info_message = f"Lilypad POW Contract Address: {POW_CONTRACT_ADDRESS_URL}"
+    info_message = f"Lilypad POW Contract Address: {POW_CONTRACT_ADDRESS_URL} \n {discord_roles}"
     
     # Check if the time since the last transaction exceeds the error threshold
     if total_seconds_since_last_tx > error_threshold_minutes * 60:
@@ -101,7 +101,7 @@ def monitor_transactions():
         ok_message = f"**OK**: Last transaction was {format_time_difference(total_seconds_since_last_tx)} ago."
         print(ok_message)  # Print OK message
         # Send an OK alert to the specified Discord webhook
-        # send_discord_message(POW_MONITORING_WEBHOOK, f"🟢 {ok_message}")
+        send_discord_message(POW_MONITORING_WEBHOOK, f"🟢 {ok_message}")
 
 # If this script is run directly, call the monitor_transactions function
 if __name__ == "__main__":
