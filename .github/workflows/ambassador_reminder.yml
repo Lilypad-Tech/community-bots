@@ -1,0 +1,18 @@
+name: Ambassador Reminder
+
+on:
+  schedule:
+    - cron: "30 16 */4 * *" # Runs every 4 days at 16:30 (4:30 PM) UTC
+
+jobs:
+  run-reminder:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build and run the ambassador reminder bot
+        env:
+          AMBASSADOR_REMINDER_WEBHOOK: ${{ secrets.AMBASSADOR_REMINDER_WEBHOOK }}
+        run: |
+          docker compose run --env AMBASSADOR_REMINDER_WEBHOOK=$AMBASSADOR_REMINDER_WEBHOOK --entrypoint "sh -c 'python3 ambassador_reminder.py'" lilypad_assistant
