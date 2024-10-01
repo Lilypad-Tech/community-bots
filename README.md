@@ -5,6 +5,7 @@ This Python project provides a modular framework for interacting with GitHub iss
 ## Project Structure
 
 - `utils/`
+
   - `discord.py`: Utility functions for sending messages to Discord.
   - `git.py`: Utility functions for fetching issues from GitHub.
 
@@ -12,8 +13,9 @@ This Python project provides a modular framework for interacting with GitHub iss
 
 - `oss_leaderboard.py`: Generates a leaderboard of contributors based on closed GitHub issues and sends it to Discord.
 
-- `vars.py`: Contains configuration variables such as GitHub API URL and Discord webhook URL.
+- `ambassador_reminder.py`: Sends periodic (every 4 days) reminders about the Lilypad Ambassador Program to the Lilypad general Discord channel.
 
+- `vars.py`: Contains configuration variables such as GitHub API URL and Discord webhook URL.
 
 ## Usage
 
@@ -45,48 +47,54 @@ The `oss_leaderboard.py` script:
 3. Creates a leaderboard with badges and progress bars based on the number of solved issues.
 4. Sends the leaderboard to Discord.
 
+### Ambassador program reminder
+
+The `ambassador_reminder.py` script:
+
+1. Sends a reminder about the Lilypad ambassador program every 4 days to the Lilypad general channel on Discord.
+
 #### Features
 
 - **Badges:** Awards badges to contributors based on their issue-solving count.
 - **Progress Bar:** Shows visual progress towards the next badge milestone.
 - **Leaderboard Formatting:** Ranks contributors and displays their achievements.
 
-
 ### Usage
+
 To set up and run the project locally using Docker Compose, follow these steps:
 
 1. **Build and run the Docker container:**
 
-    ```bash
-    docker-compose up --build
-    ```
+   ```bash
+   docker-compose up --build
+   ```
 
-    This command will build the Docker image and start the container. The `entrypoint` is set to `tail -f /dev/null` to keep the container running, allowing you to execute commands interactively.
+   This command will build the Docker image and start the container. The `entrypoint` is set to `tail -f /dev/null` to keep the container running, allowing you to execute commands interactively.
 
 2. **Access the container:**
 
-    To run scripts or interact with the container, use the following command:
+   To run scripts or interact with the container, use the following command:
 
-    ```bash
-    docker exec -it lilypad_assistant /bin/bash
-    ```
+   ```bash
+   docker exec -it lilypad_assistant /bin/bash
+   ```
 
-    You can now run your Python scripts inside the container. For example, to run `oss_issues.py`:
+   You can now run your Python scripts inside the container. For example, to run `oss_issues.py`:
 
-    ```bash
-    python3 oss_issues.py
-    ```
+   ```bash
+   python3 oss_issues.py
+   ```
 
-    Or to run `oss_leaderboard.py`:
+   Or to run `oss_leaderboard.py`:
 
-    ```bash
-    python3 oss_leaderboard.py
-    ```
+   ```bash
+   python3 oss_leaderboard.py
+   ```
 
 3. **Stop the container:**
 
-    To stop and remove the container, use:
+   To stop and remove the container, use:
 
-    ```bash
-    docker-compose down
-    ```
+   ```bash
+   docker-compose down
+   ```
