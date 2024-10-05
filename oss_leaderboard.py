@@ -1,10 +1,10 @@
 from collections import defaultdict
 from utils.git import fetch_all_issues
 from utils.discord import send_discord_message
-from vars import OSS_DISCORD_WEBHOOK, GIT_API_URL
+from vars import OSS_DISCORD_WEBHOOK, GIT_API_URLS
 
-# GitHub 
-params_closed = {'state': 'closed', 'per_page': 100, 'page': 1}
+# GitHub parameters for closed issues
+params_closed = {'state': 'closed', 'per_page': 100}
 
 # Assign badges based on the number of issues solved
 def assign_badge(count):
@@ -55,7 +55,13 @@ def format_leaderboard_with_progress(sorted_assignees):
 
 # Fetch closed issues and build the leaderboard
 def generate_leaderboard():
-    closed_issues = fetch_all_issues(GIT_API_URL, params_closed)
+    closed_issues = []
+
+    # Fetch issues from all repositories
+    for api_url in GIT_API_URLS:
+        repo_issues = fetch_all_issues(api_url, params_closed)
+        closed_issues.extend(repo_issues)
+
     solved_issues_by_assignee = defaultdict(int)
 
     for issue in closed_issues:
@@ -72,5 +78,6 @@ def generate_leaderboard():
 
     leaderboard_message = format_leaderboard_with_progress(sorted_assignees)
     send_discord_message(OSS_DISCORD_WEBHOOK, leaderboard_message)
-    
-generate_leaderboard()
+
+if __name__ == "__main__":
+    generate_leaderboard()

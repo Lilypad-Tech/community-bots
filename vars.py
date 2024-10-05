@@ -1,12 +1,16 @@
 import os
 
-# GitHub API URL for the repository
-GIT_API_URL = "https://api.github.com/repos/Lilypad-Tech/lilypad/issues"
+# GitHub API URLs for the repositories
+GIT_API_URLS = [
+    "https://api.github.com/repos/Lilypad-Tech/lilypad/issues",
+    "https://api.github.com/repos/Lilypad-Tech/community-bots/issues"
+]
 
 # Discord webhook URL (you can set your actual webhook URL here)
 OSS_DISCORD_WEBHOOK = os.getenv('OSS_DISCORD_WEBHOOK')
 POW_MONITORING_WEBHOOK = os.getenv('POW_DISCORD_WEBHOOK')
 AMBASSADOR_REMINDER_WEBHOOK = os.getenv('AMBASSADOR_REMINDER_DISCORD_WEBHOOK')
+
 # Discord Roles
 LILYTEAM_DISCORD_ROLE = "<@&1212902935969669140>"
 LILYPAD_ADVOCATE_DISCORD_ROLE = "<@&1255696024161226783>"
