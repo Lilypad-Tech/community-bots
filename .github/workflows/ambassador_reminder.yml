@@ -13,6 +13,6 @@ jobs:
 
       - name: Build and run the ambassador reminder bot
         env:
-          AMBASSADOR_REMINDER_WEBHOOK: ${{ secrets.AMBASSADOR_REMINDER_WEBHOOK }}
+          AMBASSADOR_REMINDER_DISCORD_WEBHOOK: ${{ secrets.AMBASSADOR_REMINDER_DISCORD_WEBHOOK }}
         run: |
-          docker compose run --env AMBASSADOR_REMINDER_WEBHOOK=$AMBASSADOR_REMINDER_WEBHOOK --entrypoint "sh -c 'python3 ambassador_reminder.py'" lilypad_assistant
+          docker compose run --env AMBASSADOR_REMINDER_DISCORD_WEBHOOK=$AMBASSADOR_REMINDER_DISCORD_WEBHOOK --entrypoint "sh -c 'python3 ambassador_reminder.py'" lilypad_assistant
