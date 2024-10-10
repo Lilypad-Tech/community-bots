@@ -54,10 +54,7 @@ async def on_message(message):
 
                         for i in range(0, len(filtered_text), 1900):
                             # Wrap the text in triple backticks to format as a code block
-                            chunk = filtered_text[i:i+1900].replace("`", "\\`")
-                            await message.channel.send(f"```{chunk}```")
-                    else:
-                        await message.channel.send("No lines containing ERR, DEBUG, or Error: found in the image.")
+                            await message.channel.send(f"{filtered_text[i:i+1900]}")
 
                 except Exception as e:
                     await message.channel.send(f"An error occurred while processing the image: {str(e)}")
