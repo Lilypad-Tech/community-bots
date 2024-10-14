@@ -16,4 +16,4 @@ jobs:
         env:
           LOGS_BOT_TOKEN: ${{ secrets.LOGS_BOT_TOKEN }}
         run: |
-          docker compose run --env LOGS_BOT_TOKEN=$LOGS_BOT_TOKEN --entrypoint "sh -c 'python3 logs_bot.py'" lilypad_assistant
+          docker compose run -d --env LOGS_BOT_TOKEN=$LOGS_BOT_TOKEN lilypad_assistant python3 logs_bot.py
