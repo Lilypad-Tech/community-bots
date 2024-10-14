@@ -1,4 +1,4 @@
-name: Discord logs to image Bot
+name: Discord logs to text Bot
 
 on:
   push:
@@ -12,9 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build and run the discord logs screenshot to text bot
+      - name: Build and run the Discord logs screenshot to text bot
         env:
           LOGS_BOT_TOKEN: ${{ secrets.LOGS_BOT_TOKEN }}
         run: |
           docker compose up -d lilypad_assistant
-          docker exec -e LOGS_BOT_TOKEN=$LOGS_BOT_TOKEN lilypad_assistant python3 logs_bot.py
+          docker exec lilypad_assistant nohup python3 logs_bot.py > logs.out 2>&1 &
