@@ -34,7 +34,7 @@ async def on_message(message):
     # If the message is in a thread under the 'i-need-help' forum channel and contains attachments
     if isinstance(message.channel, discord.Thread) and message.channel.parent.name == 'i-need-help' and message.attachments:
         for attachment in message.attachments:
-            if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+            if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.avif', '.webp')):
                 try:
                     async with aiohttp.ClientSession() as session:
                         async with session.get(attachment.url) as resp:
@@ -50,10 +50,9 @@ async def on_message(message):
 
                     if filtered_text:
                         # Send as code block
-                        await message.channel.send(f"Extracted log lines containing ERR, DEBUG, or Error: from {attachment.filename}:")
+                        await message.channel.send(f"Extracted log lines containing ERR, DEBUG, TRC, WRN or Error: from {attachment.filename}:")
 
                         for i in range(0, len(filtered_text), 1900):
-                            # Wrap the text in triple backticks to format as a code block
                             await message.channel.send(f"{filtered_text[i:i+1900]}")
 
                 except Exception as e:
@@ -61,5 +60,4 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
-# Run the bot
 bot.run(LOGS_BOT_TOKEN)

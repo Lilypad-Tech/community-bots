@@ -1,0 +1,19 @@
+name: Discord logs to image Bot
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build and run the discord logs screenshot to text bot
+        env:
+          LOGS_BOT_TOKEN: ${{ secrets.LOGS_BOT_TOKEN }}
+        run: |
+          docker compose run --env LOGS_BOT_TOKEN=$LOGS_BOT_TOKEN --entrypoint "sh -c 'python3 logs_bot.py'" lilypad_assistant
