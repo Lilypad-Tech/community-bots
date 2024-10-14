@@ -1,10 +1,10 @@
 import random
 from utils.git import fetch_all_issues
 from utils.discord import send_discord_message
-from vars import OSS_DISCORD_WEBHOOK, GIT_API_URL
+from vars import OSS_DISCORD_WEBHOOK, GIT_API_URLS
 
-# GitHub 
-params_open = {'state': 'open', 'per_page': 100, 'page': 1}
+# GitHub parameters for open issues
+params_open = {'state': 'open', 'per_page': 100}
 
 # Load encouragement messages from file
 def load_encouragement_messages(filename):
@@ -21,11 +21,16 @@ def format_issues(issues, status):
             message.append(f"{i}. [{issue['title']}](<{issue['url']}>) ({assignees})")
         return '\n'.join(message)
     else:
-        return f"No {status.lower()} community issues:"
+        return f"No {status.lower()} community issues."
 
 def process_open_issues():
-    open_issues = fetch_all_issues(GIT_API_URL, params_open)
-    
+    open_issues = []
+
+    # Fetch issues from all repositories
+    for api_url in GIT_API_URLS:
+        repo_issues = fetch_all_issues(api_url, params_open)
+        open_issues.extend(repo_issues)
+
     community_assigned_issues = []
     community_unassigned_issues = []
 
@@ -40,30 +45,29 @@ def process_open_issues():
         assignee_names = assignees if assignees else ["Unassigned"]
 
         if has_community_tag:
+            issue_data = {
+                'title': issue_title,
+                'url': issue_url,
+                'assignees': assignee_names
+            }
             if assignee_names == ["Unassigned"]:
-                community_unassigned_issues.append({
-                    'title': issue_title,
-                    'url': issue_url,
-                    'assignees': assignee_names
-                })
+                community_unassigned_issues.append(issue_data)
             else:
-                community_assigned_issues.append({
-                    'title': issue_title,
-                    'url': issue_url,
-                    'assignees': assignee_names
-                })
+                community_assigned_issues.append(issue_data)
 
     # Choose a random encouragement message
     encouragement_messages = load_encouragement_messages('oss_encouragement_messages.txt')
     encouragement_message = random.choice(encouragement_messages)
 
     # Prepare the content for Discord message (for open issues)
-    open_issues_message = (encouragement_message + "\n\n" +
-                           format_issues(community_unassigned_issues, "**Unassigned**") +
-                           "\n\n" +
-                           format_issues(community_assigned_issues, "**Assigned**"))
+    open_issues_message = (
+        f"{encouragement_message}\n\n"
+        f"{format_issues(community_unassigned_issues, '**Unassigned**')}\n\n"
+        f"{format_issues(community_assigned_issues, '**Assigned**')}"
+    )
 
     send_discord_message(OSS_DISCORD_WEBHOOK, open_issues_message)
-    
+
 # Process open issues
-process_open_issues()
+if __name__ == "__main__":
+    process_open_issues()
