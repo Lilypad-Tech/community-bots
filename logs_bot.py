@@ -31,8 +31,8 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    # If the message is in a thread under the 'i-need-help' forum channel and contains attachments
-    if isinstance(message.channel, discord.Thread) and message.channel.parent.name == '🙋🏻│i-need-help' and message.attachments:
+    # If the message is in a thread under the 'i-need-help' forum channel using ID and contains attachments
+    if isinstance(message.channel, discord.Thread) and message.channel.parent_id == 1230231823674642513 and message.attachments:
         for attachment in message.attachments:
             if attachment.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.avif', '.webp')):
                 try:
