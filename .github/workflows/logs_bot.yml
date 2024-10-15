@@ -17,4 +17,16 @@ jobs:
           LOGS_BOT_TOKEN: ${{ secrets.LOGS_BOT_TOKEN }}
         run: |
           docker compose up -d lilypad_assistant
-          docker exec lilypad_assistant nohup python3 logs_bot.py > logs.out 2>&1 &
+          docker logs lilypad_assistant --follow &
+          docker exec lilypad_assistant python3 logs_bot.py &
+          sleep 60  # Wait for 60 seconds to see if the bot initializes
+          docker logs lilypad_assistant
+
+      - name: Check bot status
+        run: |
+          if docker logs lilypad_assistant | grep -q "successfully connected to Discord"; then
+            echo "Bot successfully connected to Discord"
+          else
+            echo "Bot failed to connect to Discord"
+            exit 1
+          fi
