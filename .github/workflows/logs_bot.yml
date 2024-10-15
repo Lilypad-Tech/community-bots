@@ -16,7 +16,5 @@ jobs:
         env:
           LOGS_BOT_TOKEN: ${{ secrets.LOGS_BOT_TOKEN }}
         run: |
-          docker compose up -d lilypad_assistant
-          docker exec -e LOGS_BOT_TOKEN=$LOGS_BOT_TOKEN lilypad_assistant python3 logs_bot.py &
-          sleep 60
-          docker logs lilypad_assistant
+          docker compose up -d lilypad_assistant  # Start the container detached
+          docker exec -e LOGS_BOT_TOKEN=$LOGS_BOT_TOKEN -d lilypad_assistant python3 logs_bot.py
