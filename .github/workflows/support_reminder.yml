@@ -2,8 +2,8 @@ name: Support Reminder
 
 on:
   schedule:
-    # Runs every 4 days at 16:30 (4:30 PM UTC), starting 2 days after Ambassador Reminder
-    - cron: "30 16 3-31/4 * *"
+    # Runs every 4 days at 16:30 (4:30 PM UTC), starting 1 day after Ambassador Reminder
+    - cron: "30 16 2-31/4 * *"
 
 jobs:
   run-support-reminder:
