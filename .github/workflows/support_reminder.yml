@@ -4,6 +4,7 @@ on:
   schedule:
     # Runs every 4 days at 16:30 (4:30 PM UTC), starting 1 day after Ambassador Reminder
     - cron: "30 16 2-31/4 * *"
+  workflow_dispatch:
 
 jobs:
   run-support-reminder:
